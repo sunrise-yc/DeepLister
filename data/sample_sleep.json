@@ -1,0 +1,30 @@
+{
+  "title": "睡眠质量 Demo 问卷",
+  "description": "DeepLister 移动端演示用的最小睡眠主题问卷。",
+  "topics": [
+    {
+      "topic_id": "sleep_quality",
+      "topic_name": "睡眠质量",
+      "description": "了解最近一周的睡眠状态、影响原因和白天精力。",
+      "core_dimensions": ["入睡难度", "睡眠连续性", "影响原因", "白天精力"],
+      "opening_question": "最近一周睡眠怎么样？有没有入睡困难、早醒或者睡不踏实的情况？",
+      "sub_questions": [
+        {
+          "question_id": "sleep_score",
+          "text": "如果用 1 到 10 分打分，最近一周睡眠大概在几分？",
+          "dimension": "入睡难度"
+        },
+        {
+          "question_id": "sleep_reason",
+          "text": "是什么让你不容易睡着？是脑子里想事情，还是身体不舒服？",
+          "dimension": "影响原因"
+        },
+        {
+          "question_id": "daytime_energy",
+          "text": "白天会觉得精力不够吗？",
+          "dimension": "白天精力"
+        }
+      ]
+    }
+  ]
+}
