@@ -87,7 +87,7 @@ Step 4 校验：追问质量过关吗？
 # 安装依赖
 pip install -r requirements.txt
 
-# Demo模式运行（无需API Key）
+# Demo模式运行（无需API Key，默认使用规则/Mock Harness）
 streamlit run app.py
 
 # 评估模式
@@ -96,6 +96,23 @@ python run_eval.py
 # 真实LLM模式（需要OpenAI API Key）
 OPENAI_API_KEY=sk-xxx streamlit run app.py
 ```
+
+
+## 当前可演示Demo
+
+本仓库已提供一个移动端友好的 Streamlit Demo：
+
+```bash
+streamlit run app.py
+```
+
+演示建议依次输入：
+
+1. `还行` —— 触发“理解纠偏”，把模糊回答转成 1-10 分量表。
+2. `4分，不太容易睡着` —— 触发“深度挖掘”，追问入睡困难原因。
+3. `主要是想事情，工作压力大` —— 当前维度信息足够，推进到白天精力问题。
+
+每轮 AI 回复下方都可以展开“Harness 决策链路”，查看检测、仲裁、生成、校验四步。
 
 ## 项目结构
 
@@ -142,8 +159,8 @@ deeplister/
 
 ## 文档
 
-- [设计文档 v4](./设计文档_v4.md) — 完整的产品设计、架构设计、可行性评估、风险预案
-- [开发手册](./开发手册_子项目规格.md) — 每个子项目的开发规格
+- [设计文档 v4](./docs/设计文档_v4.md) — 完整的产品设计、架构设计、可行性评估、风险预案
+- [开发手册](./docs/开发手册_子项目规格.md) — 每个子项目的开发规格
 
 ## 定位声明
 
