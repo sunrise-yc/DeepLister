@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 # --- 信号检测结果 ---
 
@@ -42,8 +42,8 @@ class VerificationResult(BaseModel):
 class TopicStatus(BaseModel):
     """单个话题在画像中的状态"""
     status: str = "not_started"  # not_started | in_progress | completed | skipped
-    core_dimensions_covered: list[str] = []
-    key_signals: list[str] = []
+    core_dimensions_covered: list[str] = Field(default_factory=list)
+    key_signals: list[str] = Field(default_factory=list)
     follow_up_count: int = 0
     completeness_score: float = 0.0
     current_sub_question: Optional[str] = None
@@ -71,9 +71,9 @@ class UserProfile(BaseModel):
     user_id: str
     cognitive_level: str = "medium"  # low | medium | high
     communication_preference: str = "prefer_concrete_examples"  # prefer_concrete_examples | prefer_abstract | prefer_brief
-    topics_status: dict[str, TopicStatus] = {}
-    consistency_flags: list[ConsistencyFlag] = []
-    session_history: list[SessionRecord] = []
+    topics_status: dict[str, TopicStatus] = Field(default_factory=dict)
+    consistency_flags: list[ConsistencyFlag] = Field(default_factory=list)
+    session_history: list[SessionRecord] = Field(default_factory=list)
 
 # --- 决策日志单条 ---
 
@@ -102,7 +102,7 @@ class Topic(BaseModel):
     description: str
     core_dimensions: list[str]
     opening_question: str
-    sub_questions: list[SubQuestion] = []
+    sub_questions: list[SubQuestion] = Field(default_factory=list)
 
 class Questionnaire(BaseModel):
     """研究者上传的问卷"""

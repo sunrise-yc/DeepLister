@@ -1,0 +1,40 @@
+{
+  "title": "SCL-90心理健康测评（DeepLister精简版）",
+  "description": "了解近一周的心理健康状况，预计完成时间 3 分钟",
+  "topics": [
+    {
+      "topic_id": "sleep_quality",
+      "topic_name": "睡眠质量",
+      "description": "了解近一周的睡眠状况",
+      "core_dimensions": ["入睡难度", "睡眠时长", "白天影响"],
+      "opening_question": "最近一周睡眠怎么样？有没有入睡困难或者早醒的情况？",
+      "sub_questions": [
+        {"question_id": "sleep_sq1", "text": "晚上大概多久能睡着？", "dimension": "入睡难度"},
+        {"question_id": "sleep_sq2", "text": "一晚会醒几次？醒了能再睡着吗？", "dimension": "睡眠时长"},
+        {"question_id": "sleep_sq3", "text": "白天会觉得精力不够吗？", "dimension": "白天影响"}
+      ]
+    },
+    {
+      "topic_id": "anxiety",
+      "topic_name": "焦虑情绪",
+      "description": "了解近一周的焦虑状况",
+      "core_dimensions": ["焦虑频率", "触发场景", "身体反应"],
+      "opening_question": "最近一周有没有觉得紧张、不安或者容易着急？",
+      "sub_questions": [
+        {"question_id": "anxiety_sq1", "text": "这种紧张感大概多久出现一次？", "dimension": "焦虑频率"},
+        {"question_id": "anxiety_sq2", "text": "通常是在什么情况下会感到紧张？", "dimension": "触发场景"}
+      ]
+    },
+    {
+      "topic_id": "mood",
+      "topic_name": "情绪低落",
+      "description": "了解近一周的情绪状态",
+      "core_dimensions": ["低落程度", "兴趣变化", "自我评价"],
+      "opening_question": "最近一周有没有觉得心情不好、对什么都提不起兴趣？",
+      "sub_questions": [
+        {"question_id": "mood_sq1", "text": "这种感觉持续多久了？", "dimension": "低落程度"},
+        {"question_id": "mood_sq2", "text": "以前喜欢做的事情，现在还愿意做吗？", "dimension": "兴趣变化"}
+      ]
+    }
+  ]
+}
