@@ -1,3 +1,4 @@
+import base64
 import json
 from copy import deepcopy
 from datetime import datetime
@@ -167,6 +168,39 @@ def apply_style() -> None:
                 var(--sage);
             color: #183d2e;
         }}
+        .stApp::before,
+        .stApp::after {{
+            content: "";
+            position: fixed;
+            left: -28%;
+            width: 78%;
+            height: 90px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.34;
+            filter: blur(8px);
+            background:
+                radial-gradient(ellipse at 22% 50%, rgba(247,255,249,0.82), transparent 48%),
+                linear-gradient(90deg, transparent, rgba(247,255,249,0.68), rgba(112,130,56,0.11), transparent);
+            border-radius: 999px;
+            transform: rotate(-7deg);
+            animation: pageWind 18s ease-in-out infinite;
+        }}
+        .stApp::before {{
+            top: 18%;
+        }}
+        .stApp::after {{
+            top: 58%;
+            height: 70px;
+            animation-delay: -8s;
+            animation-duration: 24s;
+            opacity: 0.22;
+        }}
+        [data-testid="stAppViewContainer"],
+        .block-container {{
+            position: relative;
+            z-index: 1;
+        }}
         .block-container {{
             max-width: 760px;
             padding: 1.1rem 1.05rem 5.2rem;
@@ -202,19 +236,218 @@ def apply_style() -> None:
             color: #5b796b;
             margin: 0;
         }}
+        .immersive-home {{
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            padding-bottom: 0.35rem;
+        }}
+        .immersive-home::before {{
+            content: "";
+            position: absolute;
+            inset: 4.2rem -18% auto;
+            height: 150px;
+            z-index: -1;
+            opacity: 0.66;
+            background:
+                radial-gradient(ellipse at 35% 50%, rgba(247,255,249,0.9), transparent 56%),
+                radial-gradient(ellipse at 72% 48%, rgba(112,130,56,0.16), transparent 50%);
+            filter: blur(16px);
+        }}
+        .scene-copy {{
+            position: relative;
+            z-index: 3;
+            text-align: left;
+            padding-top: 0.15rem;
+        }}
+        .scene-copy h1 {{
+            font-size: clamp(2.05rem, 7vw, 3.8rem);
+            margin: 0.1rem 0 0.12rem;
+        }}
+        .scene-copy .scene-line {{
+            color: #5b796b;
+            font-size: 1.02rem;
+            margin: 0;
+        }}
+        .scene-stage {{
+            position: relative;
+            z-index: 2;
+            height: clamp(238px, 46vw, 368px);
+            max-width: 560px;
+            margin: 0.15rem auto 0.4rem;
+        }}
+        .floating-smoke {{
+            position: relative;
+            z-index: 3;
+            height: 0;
+            max-width: 560px;
+            margin: 0 auto;
+            pointer-events: none;
+        }}
+        .floating-smoke .smoke-a {{
+            top: 4.1rem;
+        }}
+        .floating-smoke .smoke-b {{
+            top: 8.4rem;
+        }}
+        .floating-smoke .smoke-c {{
+            top: 6.2rem;
+        }}
+        .compact-scene {{
+            height: clamp(190px, 38vw, 300px);
+            margin-top: 0.4rem;
+        }}
+        .scene-glow {{
+            position: absolute;
+            left: 50%;
+            bottom: 1.2rem;
+            width: 78%;
+            height: 35%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(247,255,249,0.78), rgba(220,235,221,0.22) 58%, transparent 72%);
+            filter: blur(12px);
+        }}
+        .host-figure {{
+            position: absolute;
+            left: 50%;
+            bottom: -4px;
+            width: min(82vw, 430px);
+            transform: translateX(-50%);
+            border: 0;
+            border-radius: 0;
+            filter: drop-shadow(0 24px 34px rgba(47,107,79,0.2));
+            -webkit-mask-image:
+                radial-gradient(ellipse 58% 62% at 50% 54%, #000 48%, rgba(0,0,0,0.82) 64%, transparent 84%),
+                linear-gradient(180deg, #000 0%, #000 74%, rgba(0,0,0,0.76) 88%, transparent 100%);
+            mask-image:
+                radial-gradient(ellipse 58% 62% at 50% 54%, #000 48%, rgba(0,0,0,0.82) 64%, transparent 84%),
+                linear-gradient(180deg, #000 0%, #000 74%, rgba(0,0,0,0.76) 88%, transparent 100%);
+            -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+        }}
+        .smoke {{
+            position: absolute;
+            z-index: 3;
+            display: block;
+            pointer-events: none;
+            border-radius: 999px;
+            background:
+                radial-gradient(ellipse at 30% 45%, rgba(247,255,249,0.82), rgba(247,255,249,0.18) 45%, transparent 72%),
+                linear-gradient(90deg, transparent, rgba(247,255,249,0.55), transparent);
+            filter: blur(8px);
+            opacity: 0.68;
+            transform: rotate(-8deg);
+            animation: smokeDrift 14s ease-in-out infinite;
+        }}
+        .smoke-a {{
+            width: 46%;
+            height: 42px;
+            left: 28%;
+            top: 30%;
+        }}
+        .smoke-b {{
+            width: 58%;
+            height: 50px;
+            left: 9%;
+            top: 56%;
+            animation-delay: -5s;
+            animation-duration: 18s;
+            opacity: 0.5;
+        }}
+        .smoke-c {{
+            width: 44%;
+            height: 36px;
+            right: 2%;
+            top: 42%;
+            animation-delay: -9s;
+            animation-duration: 20s;
+            opacity: 0.44;
+        }}
+        .wind-thread {{
+            position: absolute;
+            pointer-events: none;
+            z-index: 4;
+            left: -32%;
+            width: 82%;
+            height: 38px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, transparent, rgba(247,255,249,0.92), rgba(112,130,56,0.18), transparent);
+            filter: blur(6px);
+            opacity: 0.58;
+            transform: rotate(-7deg);
+            animation: windSweep 13s ease-in-out infinite;
+        }}
+        .wind-title {{
+            top: 4.2rem;
+        }}
+        .wind-buttons {{
+            top: calc(100% - 7rem);
+            animation-delay: -6s;
+            animation-duration: 16s;
+            opacity: 0.44;
+        }}
+        .home-grid {{
+            position: relative;
+        }}
+        .home-grid::before {{
+            content: "";
+            position: absolute;
+            inset: -38px -36px;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                linear-gradient(100deg, transparent, rgba(247,255,249,0.62), transparent),
+                radial-gradient(ellipse at 55% 55%, rgba(247,255,249,0.28), transparent 58%);
+            border-radius: 999px;
+            filter: blur(9px);
+            opacity: 0.34;
+            animation: buttonMist 17s ease-in-out infinite;
+        }}
         .stImage img {{
             width: min(100%, 380px) !important;
             max-width: 380px !important;
             display: block;
             margin: 0 auto;
-            border-radius: 8px;
-            border: 1px solid rgba(247,255,249,0.82);
-            box-shadow: 0 18px 48px rgba(47,107,79,0.16);
+            border-radius: 0;
+            border: 0;
+            box-shadow: none;
+            filter: drop-shadow(0 24px 34px rgba(47,107,79,0.2));
+            -webkit-mask-image:
+                radial-gradient(ellipse 58% 62% at 50% 54%, #000 48%, rgba(0,0,0,0.82) 64%, transparent 84%),
+                linear-gradient(180deg, #000 0%, #000 74%, rgba(0,0,0,0.76) 88%, transparent 100%);
+            mask-image:
+                radial-gradient(ellipse 58% 62% at 50% 54%, #000 48%, rgba(0,0,0,0.82) 64%, transparent 84%),
+                linear-gradient(180deg, #000 0%, #000 74%, rgba(0,0,0,0.76) 88%, transparent 100%);
+            -webkit-mask-composite: source-in;
+            mask-composite: intersect;
             animation: hostFloat 5s ease-in-out infinite;
         }}
         @keyframes hostFloat {{
             0%, 100% {{ transform: translateY(0); }}
             50% {{ transform: translateY(-5px); }}
+        }}
+        @keyframes pageWind {{
+            0% {{ transform: translateX(-15%) rotate(-7deg); opacity: 0; }}
+            18% {{ opacity: 0.28; }}
+            55% {{ opacity: 0.36; }}
+            100% {{ transform: translateX(175%) rotate(-7deg); opacity: 0; }}
+        }}
+        @keyframes smokeDrift {{
+            0%, 100% {{ transform: translate3d(0, 0, 0) rotate(-8deg) scale(1); opacity: 0.38; }}
+            42% {{ transform: translate3d(38px, -12px, 0) rotate(-3deg) scale(1.08); opacity: 0.72; }}
+            70% {{ transform: translate3d(74px, -6px, 0) rotate(2deg) scale(0.96); opacity: 0.34; }}
+        }}
+        @keyframes windSweep {{
+            0% {{ transform: translateX(-8%) rotate(-7deg); opacity: 0; }}
+            20% {{ opacity: 0.58; }}
+            76% {{ opacity: 0.36; }}
+            100% {{ transform: translateX(178%) rotate(-7deg); opacity: 0; }}
+        }}
+        @keyframes buttonMist {{
+            0%, 100% {{ transform: translateX(-20%) rotate(-4deg); opacity: 0.12; }}
+            40% {{ opacity: 0.36; }}
+            68% {{ transform: translateX(22%) rotate(-4deg); opacity: 0.24; }}
         }}
         .home-grid {{
             display: grid;
@@ -233,8 +466,11 @@ def apply_style() -> None:
             color: var(--forest) !important;
             text-decoration: none !important;
             display: flex;
+            position: relative;
+            z-index: 2;
             flex-direction: column;
             justify-content: space-between;
+            backdrop-filter: blur(8px);
             transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
         }}
         .home-card:hover {{
@@ -354,8 +590,55 @@ def apply_style() -> None:
             h1 {{
                 font-size: 1.58rem;
             }}
+            .scene-copy h1 {{
+                font-size: 2.1rem;
+            }}
+            .scene-copy .scene-line {{
+                font-size: 0.94rem;
+            }}
+            .scene-stage {{
+                height: 214px;
+                margin-top: 1rem;
+                margin-bottom: 0.2rem;
+            }}
+            .floating-smoke .smoke-a {{
+                top: 3.5rem;
+            }}
+            .floating-smoke .smoke-b {{
+                top: 6.6rem;
+            }}
+            .floating-smoke .smoke-c {{
+                top: 5.1rem;
+            }}
+            .compact-scene {{
+                height: 184px;
+                margin-top: 0.35rem;
+            }}
+            .host-figure {{
+                width: min(64vw, 220px);
+            }}
+            .smoke {{
+                filter: blur(7px);
+            }}
+            .smoke-a {{
+                width: 55%;
+                left: 25%;
+                top: 28%;
+            }}
+            .smoke-b {{
+                width: 62%;
+                left: 4%;
+                top: 57%;
+            }}
+            .wind-thread {{
+                height: 28px;
+            }}
+            .wind-title {{
+                top: 3.7rem;
+            }}
             .home-grid {{
                 gap: 0.65rem;
+                margin-top: 0.35rem;
             }}
             .home-card {{
                 min-height: 132px;
@@ -367,6 +650,16 @@ def apply_style() -> None:
             .stImage img {{
                 width: min(100%, 260px) !important;
                 max-width: 260px !important;
+            }}
+        }}
+        @media (prefers-reduced-motion: reduce) {{
+            .stApp::before,
+            .stApp::after,
+            .host-figure,
+            .smoke,
+            .wind-thread,
+            .home-grid::before {{
+                animation: none !important;
             }}
         }}
         </style>
@@ -778,6 +1071,167 @@ def render_complete() -> None:
     )
     if HOST_IMAGE.exists():
         st.image(str(HOST_IMAGE), use_container_width=True)
+    st.download_button(
+        "导出已填写问卷",
+        data=build_export_payload(),
+        file_name=f"deeplister-{agent['kind']}-filled-questionnaire.json",
+        mime="application/json",
+        use_container_width=True,
+    )
+    if st.button("再体验一次", use_container_width=True):
+        reset_agent_state()
+        go_to("home")
+
+
+@st.cache_data(show_spinner=False)
+def image_data_uri(path_text: str) -> str:
+    path = Path(path_text)
+    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+    return f"data:image/png;base64,{encoded}"
+
+
+def render_host_scene(compact: bool = False) -> str:
+    if not HOST_IMAGE.exists():
+        return ""
+    data_uri = image_data_uri(str(HOST_IMAGE))
+    compact_class = " compact-scene" if compact else ""
+    return f"""
+        <div class="scene-stage{compact_class}">
+          <span class="scene-glow"></span>
+          <span class="smoke smoke-a"></span>
+          <span class="smoke smoke-b"></span>
+          <span class="smoke smoke-c"></span>
+          <img class="host-figure" src="{data_uri}" alt="DeepLister 调研官">
+        </div>
+    """
+
+
+def render_home() -> None:
+    reset_agent_state()
+    st.markdown(
+        f"""
+        <div class="immersive-home">
+          <span class="wind-thread wind-title"></span>
+          <span class="wind-thread wind-buttons"></span>
+          <div class="scene-copy">
+            <p class="eyebrow">DeepLister</p>
+            <h1>请坐，问卷会自己追问</h1>
+            <p class="scene-line">导入问卷、输入邀请码，或直接进入一个更有趣的人格测试。</p>
+          </div>
+          {render_host_scene()}
+          <div class="home-grid">
+            <a class="home-card primary" href="?page=import">
+              <strong>导入测试</strong>
+              <small>上传已有问卷，生成一个可追问的调研 Agent</small>
+            </a>
+            <a class="home-card" href="?page=invite">
+              <strong>输入邀请码</strong>
+              <small>进入别人制作好的调研 Agent</small>
+            </a>
+            <a class="home-card center" href="?page=mbti">
+              <strong>MBTI测试</strong>
+              <small>轻松一点，但不是随便测测</small>
+            </a>
+          </div>
+          <div class="sample-row">
+            <a class="sample-pill" href="?page=sample">快速体验样例</a>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_complete() -> None:
+    agent = current_agent()
+    summary = result_summary()
+    st.markdown('<a class="back-link" href="?page=home">返回首页</a>', unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div class="result-card">
+          <h2>{summary["headline"]}</h2>
+          <h3>{summary["title"]}</h3>
+          <p>{summary["description"]}</p>
+        </div>
+        {render_host_scene(compact=True)}
+        """,
+        unsafe_allow_html=True,
+    )
+    st.download_button(
+        "导出已填写问卷",
+        data=build_export_payload(),
+        file_name=f"deeplister-{agent['kind']}-filled-questionnaire.json",
+        mime="application/json",
+        use_container_width=True,
+    )
+    if st.button("再体验一次", use_container_width=True):
+        reset_agent_state()
+        go_to("home")
+
+
+def render_home() -> None:
+    reset_agent_state()
+    st.markdown(
+        """
+        <div class="immersive-home">
+          <span class="wind-thread wind-title"></span>
+          <span class="wind-thread wind-buttons"></span>
+          <div class="scene-copy">
+            <p class="eyebrow">DeepLister</p>
+            <h1>请坐，问卷会自己追问</h1>
+            <p class="scene-line">导入问卷、输入邀请码，或直接进入一个更有趣的人格测试。</p>
+          </div>
+          <div class="floating-smoke" aria-hidden="true">
+            <span class="smoke smoke-a"></span>
+            <span class="smoke smoke-b"></span>
+            <span class="smoke smoke-c"></span>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if HOST_IMAGE.exists():
+        st.image(str(HOST_IMAGE), use_container_width=False)
+    st.markdown(
+        """
+        <div class="home-grid">
+          <a class="home-card primary" href="?page=import">
+            <strong>导入测试</strong>
+            <small>上传已有问卷，生成一个可追问的调研 Agent</small>
+          </a>
+          <a class="home-card" href="?page=invite">
+            <strong>输入邀请码</strong>
+            <small>进入别人制作好的调研 Agent</small>
+          </a>
+          <a class="home-card center" href="?page=mbti">
+            <strong>MBTI测试</strong>
+            <small>轻松一点，但不是随便测测</small>
+          </a>
+        </div>
+        <div class="sample-row">
+          <a class="sample-pill" href="?page=sample">快速体验样例</a>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_complete() -> None:
+    agent = current_agent()
+    summary = result_summary()
+    st.markdown('<a class="back-link" href="?page=home">返回首页</a>', unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div class="result-card">
+          <h2>{summary["headline"]}</h2>
+          <h3>{summary["title"]}</h3>
+          <p>{summary["description"]}</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if HOST_IMAGE.exists():
+        st.image(str(HOST_IMAGE), use_container_width=False)
     st.download_button(
         "导出已填写问卷",
         data=build_export_payload(),
