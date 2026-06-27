@@ -1,4 +1,4 @@
-import base64
+﻿import base64
 import json
 from copy import deepcopy
 from datetime import datetime
@@ -137,555 +137,9 @@ RESULT_TITLES = {
 
 
 def apply_style() -> None:
-    st.markdown(
-        """
-        <style>
-        :root {
-            --dl-bg-sage: #DCEBDD;
-            --dl-bg-mist: #F7FFF9;
-            --dl-bg-cream: #F4EFE3;
-            --dl-ink: #183D2E;
-            --dl-forest: #2F6B4F;
-            --dl-bamboo: #708238;
-            --dl-celadon: #9FBFA8;
-            --dl-wood: #9B7651;
-            --dl-moon: #F6F0D3;
-            --dl-border-soft: rgba(47, 107, 79, 0.16);
-            --dl-shadow-soft: rgba(47, 107, 79, 0.14);
-            --sage: var(--dl-bg-sage);
-            --forest: var(--dl-forest);
-            --olive: var(--dl-bamboo);
-            --mist: var(--dl-bg-mist);
-            --ink: var(--dl-ink);
-        }
-        .stApp {
-            background:
-                radial-gradient(circle at 52% 5%, rgba(247,255,249,0.94), rgba(220,235,221,0.92) 44%, #DCEBDD 100%),
-                linear-gradient(180deg, rgba(244,239,227,0.24), rgba(247,255,249,0));
-            color: var(--ink);
-            overflow-x: hidden;
-        }
-        body {
-            overflow-x: hidden;
-        }
-        .block-container {
-            max-width: 760px;
-            padding: 1rem 1rem 5rem;
-        }
-        h1, h2, h3 {
-            color: var(--forest);
-            letter-spacing: 0;
-        }
-        h1 {
-            font-size: clamp(1.9rem, 7vw, 3.2rem);
-            line-height: 1.1;
-        }
-        [data-testid="stSidebar"] {
-            background: rgba(247,255,249,0.92);
-        }
-        .home-hero {
-            position: relative;
-            padding: 0.2rem 0 0.1rem;
-            overflow: hidden;
-        }
-        .title-lockup {
-            position: relative;
-            z-index: 8;
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            gap: 0.24rem;
-            margin: 0 auto -0.35rem;
-        }
-        .brand-title {
-            margin: 0;
-            font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
-            font-size: clamp(2rem, 7.6vw, 2.8rem);
-            font-weight: 850;
-            line-height: 1;
-            letter-spacing: 0;
-            color: var(--forest);
-            text-shadow: 0 5px 16px rgba(47,107,79,0.12);
-        }
-        .brand-subtitle {
-            margin: 0;
-            color: rgba(47,107,79,0.66);
-            font-family: Inter, Arial, sans-serif;
-            font-size: 0.8rem;
-            font-weight: 650;
-            letter-spacing: 0.04em;
-        }
-        .ritual-line {
-            position: relative;
-            z-index: 8;
-            margin: 0.18rem 0 -0.55rem;
-            text-align: center;
-            color: rgba(24,61,46,0.58);
-            font-size: 0.78rem;
-            line-height: 1.45;
-        }
-        .hero-stage {
-            position: relative;
-            display: grid;
-            place-items: center;
-            min-height: clamp(256px, 70vw, 470px);
-            margin: -0.2rem auto -0.45rem;
-            overflow: visible;
-            isolation: isolate;
-        }
-        .hero-stage::before {
-            content: "";
-            position: absolute;
-            inset: 4% -4% 5%;
-            z-index: 0;
-            opacity: 0.5;
-            background:
-                radial-gradient(ellipse at 23% 63%, rgba(255,255,255,0.72) 0 8%, transparent 34%),
-                radial-gradient(ellipse at 71% 47%, rgba(255,255,255,0.58) 0 7%, transparent 30%),
-                linear-gradient(126deg, transparent 0 52%, rgba(112,130,56,0.16) 52% 53%, transparent 53% 100%);
-            filter: blur(0.2px);
-        }
-        .hero-stage::after {
-            content: "";
-            position: absolute;
-            inset: 10% 0 2%;
-            z-index: 3;
-            pointer-events: none;
-            opacity: 0.32;
-            background:
-                radial-gradient(ellipse at 10% 72%, rgba(247,255,249,0.88) 0 8%, transparent 36%),
-                radial-gradient(ellipse at 83% 38%, rgba(247,255,249,0.82) 0 7%, transparent 32%);
-        }
-        .moon-orb {
-            position: absolute;
-            z-index: 1;
-            top: 10%;
-            right: 15%;
-            width: clamp(54px, 16vw, 92px);
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 38% 34%, rgba(255,255,255,0.98), rgba(246,240,211,0.82) 48%, rgba(208,222,189,0.38) 76%, transparent 78%);
-            box-shadow: 0 0 34px rgba(247,255,249,0.92);
-            opacity: 0.62;
-            animation: moonDrift 11s ease-in-out infinite;
-        }
-        .mist-ribbon {
-            position: absolute;
-            left: -8%;
-            z-index: 3;
-            width: 116%;
-            height: 54px;
-            border-radius: 999px;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(247,255,249,0.58), transparent 54%),
-                radial-gradient(ellipse at 58% 52%, rgba(247,255,249,0.46), transparent 48%),
-                radial-gradient(ellipse at 86% 46%, rgba(247,255,249,0.42), transparent 42%);
-            filter: blur(8px);
-            opacity: 0.36;
-            pointer-events: none;
-            animation: mistFlow 14s ease-in-out infinite;
-        }
-        .mist-one {
-            top: 42%;
-        }
-        .mist-two {
-            top: 63%;
-            animation-duration: 18s;
-            animation-delay: -5s;
-            opacity: 0.34;
-        }
-        .bamboo-grove {
-            position: absolute;
-            z-index: 1;
-            top: 17%;
-            width: 80px;
-            height: 64%;
-            pointer-events: none;
-            opacity: 0.22;
-            transform-origin: bottom center;
-            animation: bambooSway 8.6s ease-in-out infinite;
-            filter: blur(0.1px);
-            -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 82%, transparent 100%);
-            mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 82%, transparent 100%);
-        }
-        .bamboo-left {
-            left: -0.1rem;
-        }
-        .bamboo-right {
-            right: -0.15rem;
-            animation-delay: -1.9s;
-        }
-        .bamboo-stalk {
-            position: absolute;
-            bottom: 0;
-            width: 5px;
-            border-radius: 999px;
-            background:
-                repeating-linear-gradient(
-                    180deg,
-                    rgba(81,121,78,0.7) 0 24px,
-                    rgba(229,241,215,0.64) 25px 27px,
-                    rgba(81,121,78,0.7) 28px 46px
-                );
-            box-shadow: inset -1px 0 0 rgba(247,255,249,0.48);
-        }
-        .bamboo-stalk::before,
-        .bamboo-stalk::after {
-            content: "";
-            position: absolute;
-            top: 13%;
-            width: 42px;
-            height: 9px;
-            border-radius: 100% 0 100% 0;
-            background: rgba(112,130,56,0.45);
-        }
-        .bamboo-stalk::before {
-            left: 4px;
-            transform: rotate(-18deg);
-        }
-        .bamboo-stalk::after {
-            right: 3px;
-            top: 31%;
-            transform: rotate(202deg);
-        }
-        .bamboo-stalk.one {
-            left: 8px;
-            height: 96%;
-            transform: rotate(-5deg);
-        }
-        .bamboo-stalk.two {
-            left: 36px;
-            height: 88%;
-            transform: rotate(4deg);
-            opacity: 0.8;
-        }
-        .bamboo-stalk.three {
-            left: 58px;
-            height: 74%;
-            transform: rotate(-2deg);
-            opacity: 0.62;
-        }
-        .hero-figure {
-            position: relative;
-            z-index: 4;
-            display: block;
-            width: min(64vw, 440px);
-            max-width: 100%;
-            margin: -0.2rem auto -0.68rem;
-            transform: translateX(-1.8%);
-            filter: drop-shadow(0 24px 28px rgba(47,107,79,0.18));
-            animation: listenerBreathe 12s ease-in-out infinite;
-        }
-        .ambient-figure {
-            position: absolute;
-            z-index: 2;
-            width: min(108vw, 610px);
-            max-width: none;
-            opacity: 0.12;
-            transform: translateY(-1.2%);
-            mix-blend-mode: multiply;
-            pointer-events: none;
-        }
-        .ground-ellipse {
-            position: absolute;
-            z-index: 3;
-            bottom: 7%;
-            left: 50%;
-            width: min(72vw, 360px);
-            height: 58px;
-            transform: translateX(-50%);
-            border-radius: 50%;
-            background:
-                radial-gradient(ellipse at center, rgba(155,118,81,0.22) 0%, rgba(159,191,168,0.18) 42%, rgba(247,255,249,0) 72%);
-            filter: blur(2px);
-            opacity: 0.72;
-            pointer-events: none;
-        }
-        @keyframes moonDrift {
-            0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.7; }
-            50% { transform: translate3d(-6px, 5px, 0); opacity: 0.84; }
-        }
-        @keyframes mistFlow {
-            0%, 100% { transform: translateX(-10px); }
-            50% { transform: translateX(12px); }
-        }
-        @keyframes bambooSway {
-            0%, 100% { transform: rotate(-1.2deg); }
-            50% { transform: rotate(1.8deg); }
-        }
-        @keyframes listenerBreathe {
-            0%, 100% { transform: translateX(-1.8%) translateY(0); }
-            50% { transform: translateX(-1.8%) translateY(3px); }
-        }
-        @keyframes cardShadowFlow {
-            0%, 100% { transform: translateX(-4%) rotate(0deg); }
-            50% { transform: translateX(4%) rotate(1deg); }
-        }
-        .stImage img {
-            width: min(72vw, 320px) !important;
-            display: block;
-            margin: 0 auto 0.4rem;
-            border: 0;
-            border-radius: 0;
-            filter: drop-shadow(0 22px 30px rgba(47,107,79,0.18));
-        }
-        .home-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.7rem;
-            margin-top: 0.45rem;
-        }
-        .home-card {
-            position: relative;
-            overflow: hidden;
-            min-height: 132px;
-            aspect-ratio: 1 / 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            gap: 0.7rem;
-            border-radius: 8px;
-            border: 1px solid rgba(247,255,249,0.95);
-            background: rgba(247,255,249,0.78);
-            color: var(--forest) !important;
-            text-decoration: none !important;
-            padding: 0.9rem;
-            box-shadow: 0 14px 34px rgba(47,107,79,0.11);
-        }
-        .home-card::before {
-            content: "";
-            position: absolute;
-            inset: -18%;
-            z-index: 0;
-            background:
-                repeating-linear-gradient(
-                    104deg,
-                    transparent 0 36px,
-                    rgba(112,130,56,0.13) 37px 39px,
-                    transparent 40px 78px
-                ),
-                radial-gradient(ellipse at 78% 22%, rgba(112,130,56,0.12), transparent 42%);
-            opacity: 0.46;
-            transform: translateX(-2%);
-            animation: cardShadowFlow 12s ease-in-out infinite;
-            pointer-events: none;
-        }
-        .home-card.primary {
-            background: var(--forest);
-            color: var(--mist) !important;
-        }
-        .home-card.primary::before {
-            background:
-                repeating-linear-gradient(
-                    104deg,
-                    transparent 0 36px,
-                    rgba(247,255,249,0.16) 37px 39px,
-                    transparent 40px 78px
-                ),
-                radial-gradient(ellipse at 78% 22%, rgba(247,255,249,0.14), transparent 42%);
-            opacity: 0.58;
-        }
-        .home-card strong {
-            position: relative;
-            z-index: 1;
-            font-size: clamp(1.1rem, 4.6vw, 1.42rem);
-            line-height: 1.18;
-        }
-        .home-card small {
-            position: relative;
-            z-index: 1;
-            color: #617E70;
-            line-height: 1.45;
-            font-size: 0.88rem;
-        }
-        .home-card.primary small {
-            color: rgba(247,255,249,0.84);
-        }
-        .home-card.center {
-            grid-column: 1 / span 2;
-            justify-self: center;
-            width: min(60%, 224px);
-        }
-        .home-card .tag {
-            position: relative;
-            z-index: 1;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 1.35rem;
-            border-radius: 999px;
-            padding: 0.14rem 0.44rem;
-            background: rgba(159,191,168,0.26);
-            color: #4A6D57;
-            font-size: 0.72rem;
-            font-weight: 750;
-        }
-        .home-card.primary .tag {
-            background: rgba(247,255,249,0.16);
-            color: rgba(247,255,249,0.92);
-        }
-        .sample-row {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 0.7rem;
-        }
-        .sample-pill, .back-link {
-            display: inline-block;
-            border: 1px solid rgba(112,130,56,0.34);
-            border-radius: 999px;
-            color: var(--forest) !important;
-            background: rgba(247,255,249,0.74);
-            padding: 0.52rem 0.75rem;
-            text-decoration: none !important;
-            font-weight: 700;
-        }
-        .sample-pill {
-            font-size: 0.82rem;
-            padding: 0.38rem 0.58rem;
-        }
-        .panel, .question-card, .trace-card {
-            border: 1px solid rgba(247,255,249,0.95);
-            border-radius: 8px;
-            background: rgba(247,255,249,0.76);
-            padding: 1rem;
-            box-shadow: 0 14px 36px rgba(47,107,79,0.1);
-            margin: 0.75rem 0;
-        }
-        .panel, .question-card {
-            animation: bubbleFloat 9s ease-in-out infinite;
-        }
-        .question-meta {
-            color: var(--olive);
-            font-size: 0.88rem;
-            font-weight: 800;
-            margin-bottom: 0.45rem;
-        }
-        .question-main {
-            color: var(--forest);
-            font-size: 1.22rem;
-            font-weight: 850;
-            line-height: 1.45;
-        }
-        .question-why {
-            color: #5D7A6D;
-            border-top: 1px solid rgba(112,130,56,0.18);
-            margin-top: 0.8rem;
-            padding-top: 0.7rem;
-            line-height: 1.65;
-        }
-        .progress-strip {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 0.5rem 0;
-        }
-        .progress-strip span {
-            border-radius: 999px;
-            background: rgba(247,255,249,0.78);
-            border: 1px solid rgba(112,130,56,0.24);
-            color: #4F6E60;
-            padding: 0.32rem 0.56rem;
-            font-size: 0.84rem;
-            font-weight: 750;
-        }
-        div[data-testid="stTextArea"] textarea {
-            min-height: 138px;
-            border: 2px solid rgba(47,107,79,0.42);
-            background: rgba(247,255,249,0.98);
-            color: var(--ink);
-            font-size: 1rem;
-            border-radius: 8px;
-        }
-        div.stButton > button,
-        div.stDownloadButton > button {
-            border-radius: 8px;
-            min-height: 3rem;
-            font-weight: 850;
-            border: 1px solid var(--forest);
-            background: var(--forest);
-            color: var(--mist);
-        }
-        div.stButton > button:hover,
-        div.stDownloadButton > button:hover {
-            border-color: var(--olive);
-            background: var(--olive);
-            color: var(--mist);
-        }
-        .trace-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.55rem;
-        }
-        .trace-card {
-            margin: 0;
-            box-shadow: none;
-            background: rgba(247,255,249,0.66);
-        }
-        .trace-card b {
-            display: block;
-            color: var(--forest);
-            margin-bottom: 0.24rem;
-        }
-        .trace-card span {
-            color: #365D4A;
-            line-height: 1.55;
-        }
-        .result-card {
-            border-radius: 8px;
-            background: var(--forest);
-            color: var(--mist);
-            padding: 1rem;
-            margin: 0.8rem 0;
-        }
-        .result-card h2,
-        .result-card h3 {
-            color: var(--mist);
-        }
-        .result-card p {
-            color: rgba(247,255,249,0.88);
-            line-height: 1.7;
-        }
-        @media (min-width: 720px) {
-            .trace-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-        @media (max-width: 560px) {
-            .block-container {
-                padding-left: 0.85rem;
-                padding-right: 0.85rem;
-            }
-            .home-card {
-                min-height: 126px;
-                padding: 0.8rem;
-            }
-            .home-card.center {
-                width: min(64%, 210px);
-            }
-        }
-        @keyframes bubbleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-2px); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .moon-orb,
-            .mist-ribbon,
-            .bamboo-grove,
-            .hero-figure,
-            .home-card::before,
-            .panel,
-            .question-card {
-                animation: none !important;
-            }
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+    css_path = ROOT / "assets" / "deeplister.css"
+    if css_path.exists():
+        st.markdown(f"<style>{css_path.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
 
 
 def sync_page() -> None:
@@ -930,6 +384,7 @@ def render_home() -> None:
     ambient_src = image_data_url(AMBIENT_IMAGE)
     ambient_img = f'<img class="ambient-figure" src="{ambient_src}" alt="">' if ambient_src else ""
     hero_img = f'<img class="hero-figure" src="{hero_src}" alt="聆听者首页主视觉">' if hero_src else ""
+    sleeve_img = f'<img class="sleeve-figure" src="{hero_src}" alt="">' if hero_src else ""
     st.markdown(
         f"""
         <div class="home-hero">
@@ -955,6 +410,7 @@ def render_home() -> None:
             {ambient_img}
             <div class="ground-ellipse"></div>
             {hero_img}
+            {sleeve_img}
           </div>
         </div>
         """,
@@ -989,10 +445,14 @@ def render_home() -> None:
 
 def render_import() -> None:
     st.markdown('<a class="back-link" href="?page=home">返回首页</a>', unsafe_allow_html=True)
-    st.title("请导入你的调查问卷")
     st.markdown(
         """
-        <div class="panel">
+        <div class="page-head">
+          <span class="page-kicker">问卷 Agent</span>
+          <h1>请导入你的调查问卷</h1>
+          <p class="page-lead">我会先整理题目结构，再把它变成可以追问、可以导出的调研 Agent。</p>
+        </div>
+        <div class="room-panel">
           <b>上传后会生成一个调研 Agent。</b>
           <p>你可以自己开始作答，也可以复制邀请码让别人进入。</p>
         </div>
@@ -1010,10 +470,10 @@ def render_import() -> None:
     st.session_state.import_code = f"DL-{abs(hash(uploaded.name)) % 9000 + 1000}"
     st.markdown(
         f"""
-        <div class="panel">
+        <div class="room-panel">
           <b>已生成调研 Agent</b>
           <p>{uploaded.name}</p>
-          <p>邀请码：<b>{st.session_state.import_code}</b></p>
+          <p>邀请码：<span class="invite-code">{st.session_state.import_code}</span></p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -1025,7 +485,16 @@ def render_import() -> None:
 
 def render_invite() -> None:
     st.markdown('<a class="back-link" href="?page=home">返回首页</a>', unsafe_allow_html=True)
-    st.title("请输入邀请码")
+    st.markdown(
+        """
+        <div class="page-head">
+          <span class="page-kicker">进入听室</span>
+          <h1>请输入邀请码</h1>
+          <p class="page-lead">输入别人分享的邀请码后，你会进入对方制作好的调研 Agent。</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     code = st.text_input("邀请码", placeholder="例如 MBTI-DEMO 或 SCL90-DEMO", label_visibility="collapsed")
     if st.button("进入调研 Agent", use_container_width=True):
         start_agent("invite", invite_code=code or "SCL90-DEMO")
@@ -1041,8 +510,15 @@ def render_agent() -> None:
     prompt = question["followup"] if is_followup else question["question"]
 
     st.markdown('<a class="back-link" href="?page=home">返回首页</a>', unsafe_allow_html=True)
-    st.title(agent["title"])
-    st.caption(agent["subtitle"])
+    st.markdown(
+        f"""
+        <div class="agent-titlebar">
+          <h1>{agent["title"]}</h1>
+          <p>{agent["subtitle"]}</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     st.markdown(
         f"""
         <div class="progress-strip">
@@ -1080,6 +556,16 @@ def render_agent() -> None:
 def render_complete() -> None:
     summary = result_summary()
     st.markdown('<a class="back-link" href="?page=home">返回首页</a>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="page-head">
+          <span class="page-kicker">完成</span>
+          <h1>谢谢你慢慢说完</h1>
+          <p class="page-lead">DeepLister 已把你的回答整理成一份可以导出的问卷结果。</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     st.markdown(
         f"""
         <div class="result-card">
@@ -1137,3 +623,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
