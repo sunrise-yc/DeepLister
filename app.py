@@ -1,3 +1,4 @@
+import base64
 import json
 from copy import deepcopy
 from datetime import datetime
@@ -7,7 +8,8 @@ import streamlit as st
 
 
 ROOT = Path(__file__).parent
-HOST_IMAGE = ROOT / "assets" / "survey-host.png"
+HOST_IMAGE = ROOT / "assets" / "hero-listener.png"
+AMBIENT_IMAGE = ROOT / "assets" / "hero-ambient.png"
 
 ROUTES = {"home", "import", "invite", "mbti", "sample", "agent", "complete"}
 
@@ -165,19 +167,90 @@ def apply_style() -> None:
         [data-testid="stSidebar"] {
             background: rgba(247,255,249,0.92);
         }
-        .hero {
+        .home-hero {
             position: relative;
-            padding: 0.2rem 0 0;
+            padding: 0.15rem 0 0.15rem;
         }
-        .eyebrow {
-            color: var(--olive);
-            font-weight: 800;
-            margin-bottom: 0.2rem;
+        .title-lockup {
+            position: relative;
+            z-index: 4;
+            text-align: center;
+            margin: 0 auto -0.4rem;
         }
-        .lead {
-            color: #567568;
-            line-height: 1.7;
-            margin-bottom: 0.5rem;
+        .brand-title {
+            margin: 0;
+            font-family: "STKaiti", "KaiTi", "Songti SC", serif;
+            font-size: clamp(1.75rem, 7.4vw, 2.8rem);
+            font-weight: 850;
+            line-height: 1.05;
+            letter-spacing: 0;
+            color: #9B7651;
+            background: linear-gradient(180deg, #C7A77C 0%, #8D6543 58%, #B08B5F 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow:
+                0 1px 0 rgba(255,255,255,0.72),
+                0 8px 18px rgba(91,71,44,0.12);
+        }
+        .brand-subtitle {
+            margin: 0.12rem 0 0;
+            color: rgba(47,107,79,0.74);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 0.88rem;
+            letter-spacing: 0.12em;
+        }
+        .hero-stage {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-height: clamp(246px, 72vw, 480px);
+            margin: -0.35rem auto -0.45rem;
+            overflow: visible;
+            isolation: isolate;
+        }
+        .hero-stage::before {
+            content: "";
+            position: absolute;
+            inset: 4% -4% 5%;
+            z-index: 0;
+            opacity: 0.5;
+            background:
+                radial-gradient(ellipse at 23% 63%, rgba(255,255,255,0.72) 0 8%, transparent 34%),
+                radial-gradient(ellipse at 71% 47%, rgba(255,255,255,0.58) 0 7%, transparent 30%),
+                linear-gradient(126deg, transparent 0 52%, rgba(112,130,56,0.16) 52% 53%, transparent 53% 100%);
+            filter: blur(0.2px);
+        }
+        .hero-stage::after {
+            content: "";
+            position: absolute;
+            inset: 10% 0 2%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.32;
+            background:
+                radial-gradient(ellipse at 10% 72%, rgba(247,255,249,0.88) 0 8%, transparent 36%),
+                radial-gradient(ellipse at 83% 38%, rgba(247,255,249,0.82) 0 7%, transparent 32%);
+        }
+        .hero-figure {
+            position: relative;
+            z-index: 2;
+            display: block;
+            width: min(78vw, 520px);
+            max-width: 100%;
+            margin: -0.25rem auto -0.85rem;
+            transform: translateX(-1.8%);
+            filter: drop-shadow(0 24px 28px rgba(47,107,79,0.18));
+        }
+        .ambient-figure {
+            position: absolute;
+            z-index: 1;
+            width: min(108vw, 610px);
+            max-width: none;
+            opacity: 0.22;
+            transform: translateY(-1.2%);
+            mix-blend-mode: multiply;
+            pointer-events: none;
         }
         .stImage img {
             width: min(72vw, 320px) !important;
@@ -186,27 +259,22 @@ def apply_style() -> None:
             border: 0;
             border-radius: 0;
             filter: drop-shadow(0 22px 30px rgba(47,107,79,0.18));
-            -webkit-mask-image:
-                radial-gradient(ellipse 57% 62% at 50% 55%, #000 48%, rgba(0,0,0,0.82) 66%, transparent 86%),
-                linear-gradient(180deg, #000 0%, #000 74%, rgba(0,0,0,0.78) 88%, transparent 100%);
-            mask-image:
-                radial-gradient(ellipse 57% 62% at 50% 55%, #000 48%, rgba(0,0,0,0.82) 66%, transparent 86%),
-                linear-gradient(180deg, #000 0%, #000 74%, rgba(0,0,0,0.78) 88%, transparent 100%);
-            -webkit-mask-composite: source-in;
-            mask-composite: intersect;
         }
         .home-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.75rem;
-            margin-top: 0.75rem;
+            margin-top: 0.35rem;
         }
         .home-card {
             min-height: 132px;
             aspect-ratio: 1 / 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 0.7rem;
             border-radius: 8px;
             border: 1px solid rgba(247,255,249,0.95);
             background: rgba(247,255,249,0.78);
@@ -218,6 +286,10 @@ def apply_style() -> None:
         .home-card.primary {
             background: var(--forest);
             color: var(--mist) !important;
+        }
+        .home-card strong {
+            font-size: clamp(1.08rem, 4.6vw, 1.42rem);
+            line-height: 1.18;
         }
         .home-card small {
             color: #617E70;
@@ -383,6 +455,13 @@ def go_to(page: str) -> None:
 def reset_agent() -> None:
     for key in ["agent", "step", "answers", "traces", "pending_followup", "mbti_scores", "completed_at"]:
         st.session_state.pop(key, None)
+
+
+def image_data_url(path: Path) -> str:
+    if not path.exists():
+        return ""
+    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+    return f"data:image/png;base64,{encoded}"
 
 
 def make_import_agent(file_name: str) -> dict:
@@ -600,18 +679,25 @@ def render_trace(trace: dict) -> None:
 
 def render_home() -> None:
     reset_agent()
+    hero_src = image_data_url(HOST_IMAGE)
+    ambient_src = image_data_url(AMBIENT_IMAGE)
+    ambient_img = f'<img class="ambient-figure" src="{ambient_src}" alt="">' if ambient_src else ""
+    hero_img = f'<img class="hero-figure" src="{hero_src}" alt="聆听者首页主视觉">' if hero_src else ""
     st.markdown(
-        """
-        <div class="hero">
-          <p class="eyebrow">DeepLister</p>
-          <h1>把问卷变成会追问的 Agent</h1>
-          <p class="lead">一题一页，回答后可开箱查看四层架构：检测、仲裁、生成、校验。</p>
+        f"""
+        <div class="home-hero">
+          <div class="title-lockup">
+            <h1 class="brand-title">聆听者</h1>
+            <p class="brand-subtitle">DeepLister</p>
+          </div>
+          <div class="hero-stage">
+            {ambient_img}
+            {hero_img}
+          </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    if HOST_IMAGE.exists():
-        st.image(str(HOST_IMAGE), use_container_width=False)
     st.markdown(
         """
         <div class="home-grid">
