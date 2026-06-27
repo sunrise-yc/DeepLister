@@ -151,6 +151,10 @@ def apply_style() -> None:
             background:
                 radial-gradient(circle at 50% 0%, rgba(247,255,249,0.92), rgba(220,235,221,0.94) 42%, #DCEBDD 100%);
             color: var(--ink);
+            overflow-x: hidden;
+        }
+        body {
+            overflow-x: hidden;
         }
         .block-container {
             max-width: 760px;
@@ -170,42 +174,41 @@ def apply_style() -> None:
         .home-hero {
             position: relative;
             padding: 0.15rem 0 0.15rem;
+            overflow: hidden;
         }
         .title-lockup {
             position: relative;
-            z-index: 4;
-            text-align: center;
-            margin: 0 auto -0.4rem;
+            z-index: 6;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0.24rem;
+            margin: 0 auto -0.55rem;
         }
         .brand-title {
             margin: 0;
-            font-family: "STKaiti", "KaiTi", "Songti SC", serif;
-            font-size: clamp(1.75rem, 7.4vw, 2.8rem);
+            font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+            font-size: clamp(1.72rem, 7.1vw, 2.58rem);
             font-weight: 850;
-            line-height: 1.05;
+            line-height: 1;
             letter-spacing: 0;
-            color: #9B7651;
-            background: linear-gradient(180deg, #C7A77C 0%, #8D6543 58%, #B08B5F 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow:
-                0 1px 0 rgba(255,255,255,0.72),
-                0 8px 18px rgba(91,71,44,0.12);
+            color: var(--forest);
+            text-shadow: 0 5px 16px rgba(47,107,79,0.12);
         }
         .brand-subtitle {
-            margin: 0.12rem 0 0;
-            color: rgba(47,107,79,0.74);
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 0.88rem;
-            letter-spacing: 0.12em;
+            margin: 0;
+            color: rgba(47,107,79,0.66);
+            font-family: Inter, Arial, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 650;
+            letter-spacing: 0.04em;
         }
         .hero-stage {
             position: relative;
             display: grid;
             place-items: center;
-            min-height: clamp(246px, 72vw, 480px);
-            margin: -0.35rem auto -0.45rem;
+            min-height: clamp(236px, 68vw, 460px);
+            margin: -0.2rem auto -0.5rem;
             overflow: visible;
             isolation: isolate;
         }
@@ -225,18 +228,125 @@ def apply_style() -> None:
             content: "";
             position: absolute;
             inset: 10% 0 2%;
-            z-index: 1;
+            z-index: 3;
             pointer-events: none;
             opacity: 0.32;
             background:
                 radial-gradient(ellipse at 10% 72%, rgba(247,255,249,0.88) 0 8%, transparent 36%),
                 radial-gradient(ellipse at 83% 38%, rgba(247,255,249,0.82) 0 7%, transparent 32%);
         }
+        .moon-orb {
+            position: absolute;
+            z-index: 1;
+            top: 7%;
+            right: 14%;
+            width: clamp(54px, 16vw, 92px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 38% 34%, rgba(255,255,255,0.96), rgba(248,251,230,0.76) 48%, rgba(208,222,189,0.38) 76%, transparent 78%);
+            box-shadow: 0 0 34px rgba(247,255,249,0.92);
+            opacity: 0.72;
+            animation: moonDrift 11s ease-in-out infinite;
+        }
+        .mist-ribbon {
+            position: absolute;
+            left: -8%;
+            z-index: 3;
+            width: 116%;
+            height: 54px;
+            border-radius: 999px;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(247,255,249,0.58), transparent 54%),
+                radial-gradient(ellipse at 58% 52%, rgba(247,255,249,0.46), transparent 48%),
+                radial-gradient(ellipse at 86% 46%, rgba(247,255,249,0.42), transparent 42%);
+            filter: blur(8px);
+            opacity: 0.48;
+            pointer-events: none;
+            animation: mistFlow 14s ease-in-out infinite;
+        }
+        .mist-one {
+            top: 42%;
+        }
+        .mist-two {
+            top: 63%;
+            animation-duration: 18s;
+            animation-delay: -5s;
+            opacity: 0.34;
+        }
+        .bamboo-grove {
+            position: absolute;
+            z-index: 2;
+            bottom: 2%;
+            width: 78px;
+            height: 78%;
+            pointer-events: none;
+            opacity: 0.58;
+            transform-origin: bottom center;
+            animation: bambooSway 8.6s ease-in-out infinite;
+        }
+        .bamboo-left {
+            left: -0.45rem;
+        }
+        .bamboo-right {
+            right: -0.5rem;
+            animation-delay: -1.9s;
+        }
+        .bamboo-stalk {
+            position: absolute;
+            bottom: 0;
+            width: 7px;
+            border-radius: 999px;
+            background:
+                repeating-linear-gradient(
+                    180deg,
+                    rgba(81,121,78,0.72) 0 24px,
+                    rgba(229,241,215,0.82) 25px 27px,
+                    rgba(81,121,78,0.72) 28px 46px
+                );
+            box-shadow: inset -1px 0 0 rgba(247,255,249,0.48);
+        }
+        .bamboo-stalk::before,
+        .bamboo-stalk::after {
+            content: "";
+            position: absolute;
+            top: 13%;
+            width: 42px;
+            height: 9px;
+            border-radius: 100% 0 100% 0;
+            background: rgba(112,130,56,0.5);
+        }
+        .bamboo-stalk::before {
+            left: 4px;
+            transform: rotate(-18deg);
+        }
+        .bamboo-stalk::after {
+            right: 3px;
+            top: 31%;
+            transform: rotate(202deg);
+        }
+        .bamboo-stalk.one {
+            left: 8px;
+            height: 96%;
+            transform: rotate(-5deg);
+        }
+        .bamboo-stalk.two {
+            left: 36px;
+            height: 88%;
+            transform: rotate(4deg);
+            opacity: 0.8;
+        }
+        .bamboo-stalk.three {
+            left: 58px;
+            height: 74%;
+            transform: rotate(-2deg);
+            opacity: 0.62;
+        }
         .hero-figure {
             position: relative;
-            z-index: 2;
+            z-index: 4;
             display: block;
-            width: min(78vw, 520px);
+            width: min(66vw, 450px);
             max-width: 100%;
             margin: -0.25rem auto -0.85rem;
             transform: translateX(-1.8%);
@@ -244,13 +354,29 @@ def apply_style() -> None:
         }
         .ambient-figure {
             position: absolute;
-            z-index: 1;
+            z-index: 2;
             width: min(108vw, 610px);
             max-width: none;
-            opacity: 0.22;
+            opacity: 0.12;
             transform: translateY(-1.2%);
             mix-blend-mode: multiply;
             pointer-events: none;
+        }
+        @keyframes moonDrift {
+            0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.7; }
+            50% { transform: translate3d(-6px, 5px, 0); opacity: 0.84; }
+        }
+        @keyframes mistFlow {
+            0%, 100% { transform: translateX(-10px); }
+            50% { transform: translateX(12px); }
+        }
+        @keyframes bambooSway {
+            0%, 100% { transform: rotate(-1.2deg); }
+            50% { transform: rotate(1.8deg); }
+        }
+        @keyframes cardShadowFlow {
+            0%, 100% { transform: translateX(-4%) rotate(0deg); }
+            50% { transform: translateX(4%) rotate(1deg); }
         }
         .stImage img {
             width: min(72vw, 320px) !important;
@@ -267,6 +393,8 @@ def apply_style() -> None:
             margin-top: 0.35rem;
         }
         .home-card {
+            position: relative;
+            overflow: hidden;
             min-height: 132px;
             aspect-ratio: 1 / 1;
             display: flex;
@@ -283,15 +411,48 @@ def apply_style() -> None:
             padding: 0.9rem;
             box-shadow: 0 14px 34px rgba(47,107,79,0.12);
         }
+        .home-card::before {
+            content: "";
+            position: absolute;
+            inset: -18%;
+            z-index: 0;
+            background:
+                repeating-linear-gradient(
+                    104deg,
+                    transparent 0 36px,
+                    rgba(112,130,56,0.13) 37px 39px,
+                    transparent 40px 78px
+                ),
+                radial-gradient(ellipse at 78% 22%, rgba(112,130,56,0.12), transparent 42%);
+            opacity: 0.46;
+            transform: translateX(-2%);
+            animation: cardShadowFlow 12s ease-in-out infinite;
+            pointer-events: none;
+        }
         .home-card.primary {
             background: var(--forest);
             color: var(--mist) !important;
         }
+        .home-card.primary::before {
+            background:
+                repeating-linear-gradient(
+                    104deg,
+                    transparent 0 36px,
+                    rgba(247,255,249,0.16) 37px 39px,
+                    transparent 40px 78px
+                ),
+                radial-gradient(ellipse at 78% 22%, rgba(247,255,249,0.14), transparent 42%);
+            opacity: 0.58;
+        }
         .home-card strong {
+            position: relative;
+            z-index: 1;
             font-size: clamp(1.08rem, 4.6vw, 1.42rem);
             line-height: 1.18;
         }
         .home-card small {
+            position: relative;
+            z-index: 1;
             color: #617E70;
             line-height: 1.45;
         }
@@ -317,6 +478,10 @@ def apply_style() -> None:
             padding: 0.52rem 0.75rem;
             text-decoration: none !important;
             font-weight: 700;
+        }
+        .sample-pill {
+            font-size: 0.82rem;
+            padding: 0.38rem 0.58rem;
         }
         .panel, .question-card, .trace-card {
             border: 1px solid rgba(247,255,249,0.95);
@@ -691,6 +856,19 @@ def render_home() -> None:
             <p class="brand-subtitle">DeepLister</p>
           </div>
           <div class="hero-stage">
+            <div class="moon-orb"></div>
+            <div class="bamboo-grove bamboo-left">
+              <span class="bamboo-stalk one"></span>
+              <span class="bamboo-stalk two"></span>
+              <span class="bamboo-stalk three"></span>
+            </div>
+            <div class="bamboo-grove bamboo-right">
+              <span class="bamboo-stalk one"></span>
+              <span class="bamboo-stalk two"></span>
+              <span class="bamboo-stalk three"></span>
+            </div>
+            <div class="mist-ribbon mist-one"></div>
+            <div class="mist-ribbon mist-two"></div>
             {ambient_img}
             {hero_img}
           </div>
