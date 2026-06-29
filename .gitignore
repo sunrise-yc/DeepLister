@@ -3,6 +3,11 @@ __pycache__/
 .pytest_cache/
 *.log
 *.out.log
+.env
+.env.*
+.venv/
+venv/
+env/
 .streamlit/secrets.toml
 data/profiles/
 data/logs/

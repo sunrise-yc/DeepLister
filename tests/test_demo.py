@@ -34,5 +34,9 @@ def main() -> None:
     print("Demo engine OK")
 
 
+def test_demo_engine_smoke() -> None:
+    main()
+
+
 if __name__ == "__main__":
     main()

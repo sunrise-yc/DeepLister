@@ -1,8 +1,10 @@
 import base64
 import json
+import os
 from collections import Counter
 from copy import deepcopy
 from datetime import datetime
+from hashlib import sha256
 from io import BytesIO
 from pathlib import Path
 from secrets import token_hex, token_urlsafe
@@ -312,7 +314,7 @@ def make_agent_from_questionnaire(
         "kind": questionnaire.get("kind", "imported"),
         "title": questionnaire.get("title", "导入问卷 Agent"),
         "subtitle": questionnaire.get("description") or f"已根据《{file_name or '导入问卷'}》生成调研 Agent。",
-        "invite_code": invite_code or questionnaire.get("invite_code") or st.session_state.get("import_code", "DL-2026"),
+        "invite_code": invite_code or questionnaire.get("invite_code") or "DL-DRAFT",
         "questions": questions,
         "questionnaire": questionnaire,
     }
@@ -390,7 +392,12 @@ def build_mbti_questionnaire_from_rows(rows: list[list[str]], file_name: str) ->
 def import_questionnaire(file_name: str, file_bytes: bytes) -> dict:
     suffix = Path(file_name).suffix.lower()
     if suffix == ".json":
-        questionnaire = json.loads(file_bytes.decode("utf-8-sig"))
+        try:
+            questionnaire = json.loads(file_bytes.decode("utf-8-sig"))
+        except UnicodeDecodeError as error:
+            raise ValueError("JSON 文件需要使用 UTF-8 编码。") from error
+        except json.JSONDecodeError as error:
+            raise ValueError(f"JSON 格式不正确：第 {error.lineno} 行第 {error.colno} 列附近需要检查。") from error
         if not isinstance(questionnaire, dict) or not questionnaire.get("topics"):
             raise ValueError("JSON 里需要有 topics，DeepLister 才能转换成 Agent。")
         return questionnaire
@@ -1004,6 +1011,7 @@ def reset_agent() -> None:
         "traces",
         "pending_followup",
         "pending_import_agent",
+        "pending_import_campaign_id",
         "harness_engine",
         "harness_state",
         "harness_llm_client",
@@ -1015,6 +1023,7 @@ def reset_agent() -> None:
         st.session_state.pop(key, None)
 
 
+@st.cache_data(show_spinner=False)
 def image_data_url(path: Path) -> str:
     if not path.exists():
         return ""
@@ -1022,43 +1031,23 @@ def image_data_url(path: Path) -> str:
     return f"data:image/png;base64,{encoded}"
 
 
-def make_import_agent(file_name: str, file_bytes: bytes | None = None) -> dict:
-    if file_bytes is not None:
-        questionnaire = import_questionnaire(file_name, file_bytes)
-        return make_agent_from_questionnaire(
-            questionnaire,
-            file_name=file_name,
-            invite_code=st.session_state.get("import_code", "DL-2026"),
-        )
-    return {
-        "kind": "imported",
-        "title": "导入问卷 Agent",
-        "subtitle": f"已根据《{file_name}》生成演示 Agent。",
-        "invite_code": st.session_state.get("import_code", "DL-2026"),
-        "questions": [
-            {
-                "dimension": "调研目标",
-                "question": "这份问卷最想了解的核心问题是什么？",
-                "why": "先锁定调研目标，后续追问才不会跑偏。",
-                "followup": "如果只能把目标写成一句问卷说明，你会怎么写？",
-                "options": ["了解用户真实需求", "评估体验满意度", "判断方案是否可行"],
-            },
-            {
-                "dimension": "使用场景",
-                "question": "被调研者最典型的一个使用场景是什么？",
-                "why": "场景越具体，Agent 最后填出的问卷越像真实访谈结果。",
-                "followup": "这个场景通常发生在什么时候、什么地点、用户正在做什么？",
-                "options": ["第一次接触产品", "完成一次任务后", "遇到问题反馈时"],
-            },
-            {
-                "dimension": "追问重点",
-                "question": "你最希望 Agent 追问清楚哪类细节？",
-                "why": "这决定了 Agent 后续是追原因、追例子，还是追建议。",
-                "followup": "为什么这类细节对你的问卷最重要？",
-                "options": ["原因和动机", "具体例子", "改进建议"],
-            },
-        ],
-    }
+def stable_invite_code_for_questionnaire(questionnaire: dict) -> str:
+    fingerprint = deepcopy(questionnaire)
+    fingerprint.pop("invite_code", None)
+    fingerprint.pop("source_file", None)
+    payload = json.dumps(fingerprint, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return f"DL-{sha256(payload.encode('utf-8')).hexdigest()[:8].upper()}"
+
+
+def make_import_agent(file_name: str, file_bytes: bytes) -> dict:
+    questionnaire = deepcopy(import_questionnaire(file_name, file_bytes))
+    questionnaire.setdefault("source_file", file_name)
+    invite_code = stable_invite_code_for_questionnaire(questionnaire)
+    return make_agent_from_questionnaire(
+        questionnaire,
+        file_name=file_name,
+        invite_code=invite_code,
+    )
 
 
 def survey_store():
@@ -1527,14 +1516,23 @@ def save_developer_oauth_config(client_id: str, client_secret: str, redirect_uri
 
 
 def current_developer_page_url() -> str:
+    public_base_url = os.getenv("DEEPLISTER_PUBLIC_BASE_URL", "").strip()
+    if not public_base_url:
+        public_base_url = str(streamlit_secrets().get("DEEPLISTER_PUBLIC_BASE_URL", "")).strip()
+    if public_base_url:
+        parts = urlsplit(public_base_url)
+        if parts.scheme and parts.netloc:
+            return urlunsplit((parts.scheme, parts.netloc, parts.path or "/", urlencode({"page": "developer"}), ""))
+
     try:
         current_url = st.context.url
     except Exception:
         current_url = ""
     if current_url:
         parts = urlsplit(current_url)
-        return urlunsplit((parts.scheme, parts.netloc, parts.path or "/", urlencode({"page": "developer"}), ""))
-    return "http://localhost:8503/?page=developer"
+        if parts.scheme and parts.netloc:
+            return urlunsplit((parts.scheme, parts.netloc, parts.path or "/", urlencode({"page": "developer"}), ""))
+    return "/?page=developer"
 
 
 def current_developer_redirect_uri(auth_config: GitHubOAuthConfig) -> str:
@@ -1789,13 +1787,18 @@ def create_campaign_from_agent(
     model: str = "",
     developer_feedback_enabled: bool = True,
     developer_raw_access_allowed: bool = True,
+    invite_code: str | None = None,
+    store=None,
 ) -> Campaign:
+    target_store = store or survey_store()
     campaign_agent = deepcopy(agent)
+    campaign_invite_code = (invite_code or generate_invite_code()).strip().upper()
+    campaign_agent["invite_code"] = campaign_invite_code
     if llm_enabled:
         campaign_agent["llm_base_url"] = api_base_url or Config.OPENAI_BASE_URL
         campaign_agent["llm_model"] = model or Config.OPENAI_MODEL
     campaign = Campaign(
-        invite_code=generate_invite_code(),
+        invite_code=campaign_invite_code,
         title=campaign_agent["title"],
         description=campaign_agent.get("subtitle", ""),
         agent=campaign_agent,
@@ -1805,19 +1808,45 @@ def create_campaign_from_agent(
         developer_feedback_enabled=developer_feedback_enabled,
         developer_raw_access_allowed=developer_raw_access_allowed,
     )
-    campaign.creator_storage = survey_store().creator_storage_descriptor(campaign.campaign_id)
-    survey_store().create_campaign(campaign)
+    campaign.creator_storage = target_store.creator_storage_descriptor(campaign.campaign_id)
+    target_store.create_campaign(campaign)
     if api_key:
         put_campaign_api_key(campaign.campaign_id, api_key)
     return campaign
 
 
-def make_invite_agent(code: str) -> dict:
-    if code == "MBTI-DEMO":
+def create_import_campaign_from_upload(
+    file_name: str,
+    file_bytes: bytes,
+    *,
+    store=None,
+    max_respondents: int = 20,
+) -> Campaign:
+    target_store = store or survey_store()
+    agent = make_import_agent(file_name, file_bytes)
+    existing = target_store.get_campaign_by_code(agent["invite_code"])
+    if existing is not None:
+        return existing
+    return create_campaign_from_agent(
+        agent,
+        max_respondents=max_respondents,
+        llm_enabled=False,
+        max_llm_calls_per_response=0,
+        invite_code=agent["invite_code"],
+        store=target_store,
+    )
+
+
+def make_invite_agent(code: str, *, store=None) -> dict:
+    normalized = code.strip().upper()
+    if not normalized:
+        raise ValueError("请先输入邀请码。")
+    if normalized == "MBTI-DEMO":
         return deepcopy(TEMPLATES["mbti"])
-    if code == "SCL90-DEMO":
+    if normalized == "SCL90-DEMO":
         return deepcopy(TEMPLATES["sample"])
-    campaign = survey_store().get_campaign_by_code(code)
+    target_store = store or survey_store()
+    campaign = target_store.get_campaign_by_code(normalized)
     if campaign is not None:
         agent = deepcopy(campaign.agent)
         agent["kind"] = "campaign"
@@ -1826,12 +1855,7 @@ def make_invite_agent(code: str) -> dict:
         agent["llm_enabled"] = campaign.llm_enabled
         agent["max_llm_calls_per_response"] = campaign.max_llm_calls_per_response
         return agent
-    agent = deepcopy(TEMPLATES["sample"])
-    agent["kind"] = "invite"
-    agent["title"] = "他人制作的调研 Agent"
-    agent["subtitle"] = f"邀请码：{code}"
-    agent["invite_code"] = code
-    return agent
+    raise ValueError("没有找到这个邀请码。请检查是否完整复制，或让发起者重新分享。")
 
 
 def questionnaire_from_agent(agent: dict) -> Questionnaire:
@@ -1885,9 +1909,11 @@ def init_harness(agent: dict) -> None:
 
 def start_agent(kind: str, *, file_name: str | None = None, invite_code: str | None = None) -> None:
     if kind == "imported":
-        agent = deepcopy(st.session_state.get("pending_import_agent") or make_import_agent(file_name or "导入问卷"))
+        agent = deepcopy(st.session_state.get("pending_import_agent"))
+        if agent is None:
+            raise ValueError("请先上传并解析问卷。")
     elif kind == "invite":
-        agent = make_invite_agent((invite_code or "SCL90-DEMO").strip().upper())
+        agent = make_invite_agent((invite_code or "").strip().upper())
     else:
         agent = deepcopy(TEMPLATES[kind])
 
@@ -2167,44 +2193,51 @@ def render_import() -> None:
     )
     uploaded = st.file_uploader(
         "上传问卷文件",
-        type=["txt", "json", "csv", "docx", "pdf", "xlsx"],
+        type=["json", "docx"],
         label_visibility="collapsed",
     )
     if uploaded is None:
         return
 
-    st.session_state.import_code = f"DL-{abs(hash(uploaded.name)) % 9000 + 1000}"
     try:
-        imported_agent = make_import_agent(uploaded.name, uploaded.getvalue())
+        campaign = create_import_campaign_from_upload(uploaded.name, uploaded.getvalue())
     except ValueError as error:
         st.error(f"这份文件暂时没法转换：{error}")
         return
 
+    imported_agent = campaign.agent
     st.session_state.pending_import_agent = imported_agent
+    st.session_state.pending_import_campaign_id = campaign.campaign_id
     topic_count = len(imported_agent.get("questionnaire", {}).get("topics", []))
     question_count = len(imported_agent.get("questions", []))
     st.markdown(
         f"""
         <div class="panel">
-          <b>已生成调研 Agent</b>
+          <b>已保存调研 Agent</b>
           <p>{uploaded.name}</p>
           <p>{imported_agent["title"]} · {topic_count} 个主题 · {question_count} 道题</p>
-          <p>邀请码：<b>{st.session_state.import_code}</b></p>
+          <p>邀请码：<b>{campaign.invite_code}</b></p>
         </div>
         """,
         unsafe_allow_html=True,
     )
+    st.caption(f"本地已落盘：{campaign.creator_storage.get('path', 'data/campaigns')}")
+    st.markdown(f"[复制给别人填写](?page=take&code={campaign.invite_code})")
     if st.button("开始作答", use_container_width=True):
-        start_agent("imported", file_name=uploaded.name)
+        start_agent("invite", invite_code=campaign.invite_code)
         go_to("agent")
 
 
 def render_invite() -> None:
     st.markdown('<a class="back-link" href="?page=home">返回首页</a>', unsafe_allow_html=True)
     st.title("请输入邀请码")
-    code = st.text_input("邀请码", placeholder="例如 MBTI-DEMO 或 SCL90-DEMO", label_visibility="collapsed")
+    code = st.text_input("邀请码", placeholder="例如 DL-AB12CD34、MBTI-DEMO 或 SCL90-DEMO", label_visibility="collapsed")
     if st.button("进入调研 Agent", use_container_width=True):
-        start_agent("invite", invite_code=code or "SCL90-DEMO")
+        try:
+            start_agent("invite", invite_code=code)
+        except ValueError as error:
+            st.error(str(error))
+            return
         go_to("agent")
 
 
@@ -2428,17 +2461,23 @@ def render_launch() -> None:
         if llm_enabled and not api_key:
             st.error("启用大模型时，需要先输入 API Key。")
             return
-        campaign = create_campaign_from_agent(
-            agent,
-            max_respondents=int(max_respondents),
-            llm_enabled=llm_enabled,
-            max_llm_calls_per_response=int(max_calls),
-            api_key=api_key,
-            api_base_url=api_base_url,
-            model=llm_model,
-            developer_feedback_enabled=developer_feedback_enabled,
-            developer_raw_access_allowed=developer_raw_access_allowed,
-        )
+        requested_invite_code = agent.get("invite_code") if source == "上传问卷" else None
+        campaign = survey_store().get_campaign_by_code(requested_invite_code) if requested_invite_code else None
+        if campaign is not None:
+            st.info("这份上传问卷已经保存过，已复用原来的邀请码。")
+        else:
+            campaign = create_campaign_from_agent(
+                agent,
+                max_respondents=int(max_respondents),
+                llm_enabled=llm_enabled,
+                max_llm_calls_per_response=int(max_calls),
+                api_key=api_key,
+                api_base_url=api_base_url,
+                model=llm_model,
+                developer_feedback_enabled=developer_feedback_enabled,
+                developer_raw_access_allowed=developer_raw_access_allowed,
+                invite_code=requested_invite_code,
+            )
         st.session_state.last_campaign_id = campaign.campaign_id
         st.session_state.last_manage_token = campaign.manage_token
         st.success("调研项目已创建。")
@@ -2452,16 +2491,23 @@ def render_take() -> None:
     st.markdown('<a class="back-link" href="?page=home">返回首页</a>', unsafe_allow_html=True)
     st.title("输入邀请码")
     initial_code = st.query_params.get("code", "")
-    code = st.text_input("邀请码", value=initial_code, placeholder="例如 DL-AB12 或 SCL90-DEMO")
+    code = st.text_input("邀请码", value=initial_code, placeholder="例如 DL-AB12CD34 或 SCL90-DEMO")
     if st.button("进入调研", use_container_width=True):
-        normalized = (code or "SCL90-DEMO").strip().upper()
+        normalized = code.strip().upper()
+        if not normalized:
+            st.error("请先输入邀请码。")
+            return
         campaign = survey_store().get_campaign_by_code(normalized)
         if campaign is not None:
             responses = survey_store().list_responses(campaign.campaign_id)
             if len(responses) >= campaign.max_respondents:
                 st.error("这个调研已经达到回收上限。")
                 return
-        start_agent("invite", invite_code=normalized)
+        try:
+            start_agent("invite", invite_code=normalized)
+        except ValueError as error:
+            st.error(str(error))
+            return
         go_to("agent")
 
 

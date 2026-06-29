@@ -77,5 +77,9 @@ def main() -> None:
     print("Survey store OK")
 
 
+def test_survey_store_smoke() -> None:
+    main()
+
+
 if __name__ == "__main__":
     main()

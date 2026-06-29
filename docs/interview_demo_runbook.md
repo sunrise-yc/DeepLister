@@ -26,7 +26,7 @@ run_local.bat
 
 ```powershell
 python -m pip install -r requirements.txt
-python -m streamlit run streamlit_app.py --server.port 8505 --server.headless false
+python -m streamlit run app.py --server.port 8505 --server.headless false
 ```
 
 打开：

@@ -45,5 +45,9 @@ def main() -> None:
     print("Harness engine OK")
 
 
+def test_harness_engine_smoke() -> None:
+    main()
+
+
 if __name__ == "__main__":
     main()

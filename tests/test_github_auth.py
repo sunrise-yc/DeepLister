@@ -25,10 +25,11 @@ def main() -> None:
         allowed_user_id=DEFAULT_DEVELOPER_USER_ID,
     )
 
-    authorize_url = build_github_authorize_url(config, "http://localhost:8503/?page=developer", "state-123")
+    redirect_uri = "https://deeplister.example/?page=developer"
+    authorize_url = build_github_authorize_url(config, redirect_uri, "state-123")
     params = parse_qs(urlsplit(authorize_url).query)
     assert params["client_id"] == ["client-id"]
-    assert params["redirect_uri"] == ["http://localhost:8503/?page=developer"]
+    assert params["redirect_uri"] == [redirect_uri]
     assert params["state"] == ["state-123"]
     assert params["allow_signup"] == ["false"]
 
@@ -44,7 +45,7 @@ def main() -> None:
                     "github_oauth": {
                         "client_id": "file-client",
                         "client_secret": "file-secret",
-                        "redirect_uri": "http://localhost:8503/?page=developer",
+                        "redirect_uri": redirect_uri,
                     }
                 }
             ),
@@ -72,6 +73,10 @@ def main() -> None:
         assert env_loaded.client_secret == "env-secret"
 
     print("GitHub auth OK")
+
+
+def test_github_auth_smoke() -> None:
+    main()
 
 
 if __name__ == "__main__":
