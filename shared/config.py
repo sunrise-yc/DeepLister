@@ -24,6 +24,7 @@ class Config:
     MAX_VERIFY_RETRY: int = 1          # 校验不通过最大重试次数
     
     # LLM调用参数
+    USE_LLM: bool = os.getenv("DEEPLISTER_USE_LLM", "0") == "1"
     TEMPERATURE_DETECT: float = 0.1    # 检测层：低温度保证稳定
     TEMPERATURE_GENERATE: float = 0.7  # 生成层：适当温度增加自然度
     TEMPERATURE_VERIFY: float = 0.1    # 校验层：低温度保证准确

@@ -3,9 +3,19 @@ from shared.config import Config
 class LLMClient:
     """统一的LLM调用客户端"""
     
-    def __init__(self, provider: str = None):
+    def __init__(
+        self,
+        provider: str = None,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
+    ):
         self.provider = provider or Config.LLM_PROVIDER
+        self.api_key = api_key or Config.OPENAI_API_KEY
+        self.model = model or Config.OPENAI_MODEL
+        self.base_url = base_url or Config.OPENAI_BASE_URL
         self._openai_client = None
+        self.call_count = 0
     
     @property
     def openai_client(self):
@@ -13,8 +23,8 @@ class LLMClient:
         if self._openai_client is None:
             from openai import OpenAI
             self._openai_client = OpenAI(
-                api_key=Config.OPENAI_API_KEY,
-                base_url=Config.OPENAI_BASE_URL
+                api_key=self.api_key,
+                base_url=self.base_url
             )
         return self._openai_client
     
@@ -29,8 +39,9 @@ class LLMClient:
             模型的文本回复
         """
         if self.provider == "openai":
+            self.call_count += 1
             response = self.openai_client.chat.completions.create(
-                model=Config.OPENAI_MODEL,
+                model=self.model,
                 messages=messages,
                 temperature=temperature,
                 max_tokens=max_tokens
@@ -39,6 +50,7 @@ class LLMClient:
         
         elif self.provider == "ollama":
             import requests
+            self.call_count += 1
             response = requests.post(
                 f"{Config.OLLAMA_BASE_URL}/api/chat",
                 json={

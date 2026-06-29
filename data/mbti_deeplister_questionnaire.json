@@ -1,0 +1,967 @@
+{
+  "kind": "mbti",
+  "invite_code": "MBTI-DEMO",
+  "title": "MBTI 深度人格画像测试",
+  "description": "通过 DeepLister 导入并转换的 96 题 MBTI 调研 Agent。用户按 1 到 5 分表达同意程度，系统汇总 E/I、S/N、T/F、J/P 倾向。",
+  "source_file": "D:\\chrome下载\\MBTI_深度人格画像测试题库_96题_原创可用版.docx",
+  "scale": [
+    {
+      "value": 1,
+      "label": "非常不同意"
+    },
+    {
+      "value": 2,
+      "label": "比较不同意"
+    },
+    {
+      "value": 3,
+      "label": "不确定 / 一般"
+    },
+    {
+      "value": 4,
+      "label": "比较同意"
+    },
+    {
+      "value": 5,
+      "label": "非常同意"
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": "energy_e",
+      "topic_name": "能量来源与互动方式：外向 E",
+      "description": "观察互动、表达、群体能量等外向倾向。",
+      "core_dimensions": [
+        "社交激活",
+        "外部表达",
+        "互动推进"
+      ],
+      "opening_question": "和别人讨论问题后，我通常会更有动力继续行动。",
+      "opening_question_id": "mbti_01",
+      "score": {
+        "letter": "E"
+      },
+      "source_number": 1,
+      "sub_questions": [
+        {
+          "question_id": "mbti_02",
+          "text": "我常常是在说出来的过程中，才逐渐理清自己的想法。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 2
+        },
+        {
+          "question_id": "mbti_03",
+          "text": "进入一个新环境时，我比较容易主动和别人建立联系。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 3
+        },
+        {
+          "question_id": "mbti_04",
+          "text": "如果独处太久，我会明显想要找人说话或互动。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 4
+        },
+        {
+          "question_id": "mbti_05",
+          "text": "在团队活动中，我经常自然地承担表达、沟通或推动的角色。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 5
+        },
+        {
+          "question_id": "mbti_06",
+          "text": "遇到一个新想法时，我倾向于先和别人分享。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 6
+        },
+        {
+          "question_id": "mbti_07",
+          "text": "参加社交活动后，我常常会感到被激活、被带动。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 7
+        },
+        {
+          "question_id": "mbti_08",
+          "text": "面对陌生任务时，我倾向于先向他人询问或讨论。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 8
+        },
+        {
+          "question_id": "mbti_09",
+          "text": "相比私下写清楚，我更喜欢通过口头表达说明自己的观点。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 9
+        },
+        {
+          "question_id": "mbti_10",
+          "text": "多人头脑风暴会让我更容易产生想法。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 10
+        },
+        {
+          "question_id": "mbti_11",
+          "text": "与人互动能帮助我恢复状态。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 11
+        },
+        {
+          "question_id": "mbti_12",
+          "text": "在群体场景中，我有时会主动带动气氛。",
+          "dimension": "能量来源与互动方式：外向 E",
+          "score": {
+            "letter": "E"
+          },
+          "source_number": 12
+        }
+      ]
+    },
+    {
+      "topic_id": "energy_i",
+      "topic_name": "能量来源与互动方式：内向 I",
+      "description": "观察独处恢复、私下思考、深度交流等内向倾向。",
+      "core_dimensions": [
+        "独处恢复",
+        "内部整理",
+        "深度交流"
+      ],
+      "opening_question": "遇到复杂事情时，我更喜欢先独自想清楚。",
+      "opening_question_id": "mbti_13",
+      "score": {
+        "letter": "I"
+      },
+      "source_number": 13,
+      "sub_questions": [
+        {
+          "question_id": "mbti_14",
+          "text": "连续社交之后，我通常需要一段安静时间恢复精力。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 14
+        },
+        {
+          "question_id": "mbti_15",
+          "text": "对重要想法，我更愿意通过文字或私下方式表达。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 15
+        },
+        {
+          "question_id": "mbti_16",
+          "text": "在陌生环境中，我通常会先观察，再决定是否参与。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 16
+        },
+        {
+          "question_id": "mbti_17",
+          "text": "相比热闹的多人聚会，我更喜欢一对一的深入交流。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 17
+        },
+        {
+          "question_id": "mbti_18",
+          "text": "做决定前，我需要相对独立的思考空间。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 18
+        },
+        {
+          "question_id": "mbti_19",
+          "text": "如果被突然要求当众表达，我通常会希望先准备一下。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 19
+        },
+        {
+          "question_id": "mbti_20",
+          "text": "独处对我来说是一种明显的充电方式。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 20
+        },
+        {
+          "question_id": "mbti_21",
+          "text": "我不太喜欢过多没有明确目的的社交。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 21
+        },
+        {
+          "question_id": "mbti_22",
+          "text": "对外表达前，我通常会先在心里组织好语言。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 22
+        },
+        {
+          "question_id": "mbti_23",
+          "text": "我更喜欢安静、少打扰的工作或学习环境。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 23
+        },
+        {
+          "question_id": "mbti_24",
+          "text": "在人数很多、信息很杂的场景里，我容易感到疲惫。",
+          "dimension": "能量来源与互动方式：内向 I",
+          "score": {
+            "letter": "I"
+          },
+          "source_number": 24
+        }
+      ]
+    },
+    {
+      "topic_id": "info_s",
+      "topic_name": "信息获取与理解方式：实感 S",
+      "description": "观察具体事实、经验案例、细节执行等实感倾向。",
+      "core_dimensions": [
+        "具体事实",
+        "经验案例",
+        "细节执行"
+      ],
+      "opening_question": "我更相信亲身经验和可以验证的事实。",
+      "opening_question_id": "mbti_25",
+      "score": {
+        "letter": "S"
+      },
+      "source_number": 25,
+      "sub_questions": [
+        {
+          "question_id": "mbti_26",
+          "text": "处理问题时，我会特别关注细节、步骤和实际限制。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 26
+        },
+        {
+          "question_id": "mbti_27",
+          "text": "学习新东西时，我希望说明足够具体清楚。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 27
+        },
+        {
+          "question_id": "mbti_28",
+          "text": "解决问题时，我通常会先从现有资料和现实条件入手。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 28
+        },
+        {
+          "question_id": "mbti_29",
+          "text": "相比畅想未来，我更重视眼前能不能执行。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 29
+        },
+        {
+          "question_id": "mbti_30",
+          "text": "学习抽象概念前，我希望先看到具体案例。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 30
+        },
+        {
+          "question_id": "mbti_31",
+          "text": "做规划时，我会认真考虑时间、资源、流程和成本。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 31
+        },
+        {
+          "question_id": "mbti_32",
+          "text": "当别人讲一个概念时，我常会想问：“能不能举个例子？”",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 32
+        },
+        {
+          "question_id": "mbti_33",
+          "text": "我不太喜欢过于抽象、脱离实际的讨论。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 33
+        },
+        {
+          "question_id": "mbti_34",
+          "text": "我认为一件事能不能做好，往往取决于细节是否到位。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 34
+        },
+        {
+          "question_id": "mbti_35",
+          "text": "面对变化时，我会先确认现实条件是否允许。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 35
+        },
+        {
+          "question_id": "mbti_36",
+          "text": "我更愿意使用已经被证明可靠的方法。",
+          "dimension": "信息获取与理解方式：实感 S",
+          "score": {
+            "letter": "S"
+          },
+          "source_number": 36
+        }
+      ]
+    },
+    {
+      "topic_id": "info_n",
+      "topic_name": "信息获取与理解方式：直觉 N",
+      "description": "观察抽象联想、未来可能、意义洞察等直觉倾向。",
+      "core_dimensions": [
+        "抽象联想",
+        "未来可能",
+        "意义洞察"
+      ],
+      "opening_question": "我经常会联想到事情背后的趋势、可能性或深层意义。",
+      "opening_question_id": "mbti_37",
+      "score": {
+        "letter": "N"
+      },
+      "source_number": 37,
+      "sub_questions": [
+        {
+          "question_id": "mbti_38",
+          "text": "我喜欢探索还没有发生、但未来可能出现的情况。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 38
+        },
+        {
+          "question_id": "mbti_39",
+          "text": "我对理论、模型、框架或抽象概念比较感兴趣。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 39
+        },
+        {
+          "question_id": "mbti_40",
+          "text": "理解问题时，我更习惯先看整体图景。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 40
+        },
+        {
+          "question_id": "mbti_41",
+          "text": "我常常会提出：“有没有另一种可能？”",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 41
+        },
+        {
+          "question_id": "mbti_42",
+          "text": "相比重复既有流程，我更喜欢尝试改造或创新。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 42
+        },
+        {
+          "question_id": "mbti_43",
+          "text": "阅读或观察时，我容易注意到背后的隐含意义。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 43
+        },
+        {
+          "question_id": "mbti_44",
+          "text": "新点子、新方向、新可能性很容易激发我。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 44
+        },
+        {
+          "question_id": "mbti_45",
+          "text": "相比细枝末节，我更关注方向、意义和潜在价值。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 45
+        },
+        {
+          "question_id": "mbti_46",
+          "text": "我喜欢讨论未来愿景、长期趋势或想象中的可能世界。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 46
+        },
+        {
+          "question_id": "mbti_47",
+          "text": "即使信息还不完整，我也能先进行构思和推演。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 47
+        },
+        {
+          "question_id": "mbti_48",
+          "text": "我经常能从看似无关的信息中找到联系。",
+          "dimension": "信息获取与理解方式：直觉 N",
+          "score": {
+            "letter": "N"
+          },
+          "source_number": 48
+        }
+      ]
+    },
+    {
+      "topic_id": "decision_t",
+      "topic_name": "决策判断与价值取向：思考 T",
+      "description": "观察逻辑分析、标准证据、结构判断等思考倾向。",
+      "core_dimensions": [
+        "逻辑分析",
+        "标准证据",
+        "结构判断"
+      ],
+      "opening_question": "做决定时，我会优先考虑逻辑是否一致。",
+      "opening_question_id": "mbti_49",
+      "score": {
+        "letter": "T"
+      },
+      "source_number": 49,
+      "sub_questions": [
+        {
+          "question_id": "mbti_50",
+          "text": "如果一个问题明显存在，我倾向于直接指出来。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 50
+        },
+        {
+          "question_id": "mbti_51",
+          "text": "评价一个方案时，我更看重效率、原则和结果。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 51
+        },
+        {
+          "question_id": "mbti_52",
+          "text": "面对冲突时，我会先想分清事实、责任和逻辑关系。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 52
+        },
+        {
+          "question_id": "mbti_53",
+          "text": "我不希望情绪过多影响判断。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 53
+        },
+        {
+          "question_id": "mbti_54",
+          "text": "说服别人时，我更习惯使用标准、数据、证据或推理。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 54
+        },
+        {
+          "question_id": "mbti_55",
+          "text": "别人向我求助时，我通常会先分析问题结构。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 55
+        },
+        {
+          "question_id": "mbti_56",
+          "text": "我认为真实有效的反馈，有时比委婉安慰更重要。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 56
+        },
+        {
+          "question_id": "mbti_57",
+          "text": "做重要选择时，我常会列出利弊进行比较。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 57
+        },
+        {
+          "question_id": "mbti_58",
+          "text": "对不合理的规则或观点，我会本能地想质疑。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 58
+        },
+        {
+          "question_id": "mbti_59",
+          "text": "在讨论中，我很在意结论是否站得住脚。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 59
+        },
+        {
+          "question_id": "mbti_60",
+          "text": "清晰、有力的论证通常最能打动我。",
+          "dimension": "决策判断与价值取向：思考 T",
+          "score": {
+            "letter": "T"
+          },
+          "source_number": 60
+        }
+      ]
+    },
+    {
+      "topic_id": "decision_f",
+      "topic_name": "决策判断与价值取向：情感 F",
+      "description": "观察共情关系、价值感受、关系影响等情感倾向。",
+      "core_dimensions": [
+        "共情关系",
+        "价值感受",
+        "关系影响"
+      ],
+      "opening_question": "做决定时，我会认真考虑相关人的感受。",
+      "opening_question_id": "mbti_61",
+      "score": {
+        "letter": "F"
+      },
+      "source_number": 61,
+      "sub_questions": [
+        {
+          "question_id": "mbti_62",
+          "text": "相比单纯判断对错，我也很在意关系是否被照顾。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 62
+        },
+        {
+          "question_id": "mbti_63",
+          "text": "别人的情绪变化，我通常能比较快地察觉。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 63
+        },
+        {
+          "question_id": "mbti_64",
+          "text": "给别人建议前，我会先尝试理解对方的处境。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 64
+        },
+        {
+          "question_id": "mbti_65",
+          "text": "我不喜欢过于冷硬、只讲道理不顾感受的沟通方式。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 65
+        },
+        {
+          "question_id": "mbti_66",
+          "text": "评价一个方案时，我会考虑它对人和关系的影响。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 66
+        },
+        {
+          "question_id": "mbti_67",
+          "text": "团队氛围会明显影响我的投入程度。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 67
+        },
+        {
+          "question_id": "mbti_68",
+          "text": "为了让关系更和谐，我愿意调整自己的表达方式。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 68
+        },
+        {
+          "question_id": "mbti_69",
+          "text": "当有人被忽视或不被理解时，我会比较在意。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 69
+        },
+        {
+          "question_id": "mbti_70",
+          "text": "面对冲突时，我会先想怎样减少伤害。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 70
+        },
+        {
+          "question_id": "mbti_71",
+          "text": "认可、鼓励和情感支持能明显激励我。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 71
+        },
+        {
+          "question_id": "mbti_72",
+          "text": "我希望自己做的事符合内心的价值感。",
+          "dimension": "决策判断与价值取向：情感 F",
+          "score": {
+            "letter": "F"
+          },
+          "source_number": 72
+        }
+      ]
+    },
+    {
+      "topic_id": "lifestyle_j",
+      "topic_name": "生活节奏与任务管理方式：判断 J",
+      "description": "观察计划推进、提前安排、确定性偏好等判断倾向。",
+      "core_dimensions": [
+        "计划推进",
+        "提前安排",
+        "确定性偏好"
+      ],
+      "opening_question": "我喜欢提前安排日程，而不是临时决定。",
+      "opening_question_id": "mbti_73",
+      "score": {
+        "letter": "J"
+      },
+      "source_number": 73,
+      "sub_questions": [
+        {
+          "question_id": "mbti_74",
+          "text": "开始任务前，我希望目标、标准和截止时间都比较明确。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 74
+        },
+        {
+          "question_id": "mbti_75",
+          "text": "我不喜欢把事情拖到最后一刻才完成。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 75
+        },
+        {
+          "question_id": "mbti_76",
+          "text": "完成一件事之后，我会感到明显踏实。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 76
+        },
+        {
+          "question_id": "mbti_77",
+          "text": "旅行、活动或项目开始前，我通常希望先做好计划。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 77
+        },
+        {
+          "question_id": "mbti_78",
+          "text": "面对任务时，我会自然地把它拆成几个步骤。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 78
+        },
+        {
+          "question_id": "mbti_79",
+          "text": "如果不确定性太多，我会感到不太舒服。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 79
+        },
+        {
+          "question_id": "mbti_80",
+          "text": "我倾向于尽早做决定，而不是一直悬而不决。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 80
+        },
+        {
+          "question_id": "mbti_81",
+          "text": "我喜欢使用待办事项、清单或计划表。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 81
+        },
+        {
+          "question_id": "mbti_82",
+          "text": "如果别人频繁改变计划，我的状态会受到影响。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 82
+        },
+        {
+          "question_id": "mbti_83",
+          "text": "我比较重视规则、流程和秩序。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 83
+        },
+        {
+          "question_id": "mbti_84",
+          "text": "我更喜欢稳定、可预测的生活或学习节奏。",
+          "dimension": "生活节奏与任务管理方式：判断 J",
+          "score": {
+            "letter": "J"
+          },
+          "source_number": 84
+        }
+      ]
+    },
+    {
+      "topic_id": "lifestyle_p",
+      "topic_name": "生活节奏与任务管理方式：知觉 P",
+      "description": "观察开放探索、现场调整、灵活应变等知觉倾向。",
+      "core_dimensions": [
+        "开放探索",
+        "现场调整",
+        "灵活应变"
+      ],
+      "opening_question": "我喜欢为自己保留更多选择空间。",
+      "opening_question_id": "mbti_85",
+      "score": {
+        "letter": "P"
+      },
+      "source_number": 85,
+      "sub_questions": [
+        {
+          "question_id": "mbti_86",
+          "text": "临时变化有时会给我带来新的灵感。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 86
+        },
+        {
+          "question_id": "mbti_87",
+          "text": "我不急于下结论，更愿意继续观察一段时间。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 87
+        },
+        {
+          "question_id": "mbti_88",
+          "text": "相比严格按照计划执行，我更适合边做边调整。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 88
+        },
+        {
+          "question_id": "mbti_89",
+          "text": "临近截止日期时，我反而可能更容易进入高效状态。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 89
+        },
+        {
+          "question_id": "mbti_90",
+          "text": "我不喜欢被流程、规则或计划限制得太死。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 90
+        },
+        {
+          "question_id": "mbti_91",
+          "text": "如果出现更有意思的新机会，我愿意改变原计划。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 91
+        },
+        {
+          "question_id": "mbti_92",
+          "text": "我常常会同时探索多个方向，而不是只固定在一条路上。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 92
+        },
+        {
+          "question_id": "mbti_93",
+          "text": "我能接受计划中存在一些模糊和不确定。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 93
+        },
+        {
+          "question_id": "mbti_94",
+          "text": "自由度越高，我越容易发挥创造力。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 94
+        },
+        {
+          "question_id": "mbti_95",
+          "text": "我更喜欢开放式任务，而不是步骤完全固定的任务。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 95
+        },
+        {
+          "question_id": "mbti_96",
+          "text": "我倾向于根据现场情况决定下一步怎么做。",
+          "dimension": "生活节奏与任务管理方式：知觉 P",
+          "score": {
+            "letter": "P"
+          },
+          "source_number": 96
+        }
+      ]
+    }
+  ]
+}

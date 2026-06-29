@@ -1,5 +1,12 @@
 __pycache__/
 *.pyc
+.pytest_cache/
+*.log
+*.out.log
 .streamlit/secrets.toml
 data/profiles/
 data/logs/
+data/campaigns/
+data/cloud/
+data/developer_auth.json
+data/developer_oauth_states.json
