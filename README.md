@@ -1,3 +1,15 @@
+## 在线演示
+
+公网 Demo 地址：
+
+[https://deeplister-3cwgw9zxuoewyhrwhr5y7f.streamlit.app/?page=home](https://deeplister-3cwgw9zxuoewyhrwhr5y7f.streamlit.app/?page=home)
+
+本地备用运行：
+
+```bash
+streamlit run app.py --server.port 8505
+```
+
 ---
 AIGC:
     Label: "1"
