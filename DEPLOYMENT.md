@@ -9,6 +9,12 @@ DeepLister 是一个 Streamlit Demo，用来展示“AI 辅助问卷调研与人
 - 公网演示：部署到 Streamlit Community Cloud，面试官和其他设备都可以直接打开网页。
 - 本地备用：面试现场网络不稳定时，在自己的电脑上运行，再用浏览器或局域网设备访问。
 
+当前公网演示地址：
+
+```text
+https://deeplister-3cwgw9zxuoewyhrwhr5y7f.streamlit.app/?page=home
+```
+
 当前主入口文件是根目录的 `app.py`。`streamlit_app.py` 只是兼容旧部署的转发入口。
 
 ## 本地运行步骤
@@ -73,6 +79,12 @@ app.py
 5. 点击部署，等待平台安装 `requirements.txt` 里的依赖。
 6. 部署完成后，打开平台给出的公网地址。
 7. 如果需要大模型或 GitHub OAuth，在 Streamlit Cloud 的 Secrets 页面配置密钥，不要把真实密钥写进代码。
+
+本项目当前已部署的公网地址是：
+
+```text
+https://deeplister-3cwgw9zxuoewyhrwhr5y7f.streamlit.app/?page=home
+```
 
 官方参考：
 

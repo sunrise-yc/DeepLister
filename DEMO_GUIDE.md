@@ -4,6 +4,12 @@
 
 面试时优先打开公网 Streamlit 地址。这样面试官可以在任何设备上直接访问。
 
+当前公网演示地址：
+
+```text
+https://deeplister-3cwgw9zxuoewyhrwhr5y7f.streamlit.app/?page=home
+```
+
 如果公网较慢、冷启动太久，或者现场网络不稳定，就切换到本地版本：
 
 ```powershell
